@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}我的網站{% endblock %}</title> <!-- 網頁標題 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- 引入 CSS 樣式表 -->
+    {% block head %}{% endblock %} <!-- 自訂樣式表 -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo.ico') }}"> <!-- 網站圖示 -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- 導覽列 -->
+    <nav class="navbar">
+        <!-- 公司 LOGO -->
+        <div class="logo">
+            <a href="/">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo">
+            </a>
+        </div>
+
+        <!-- 分頁連結 -->
+        <ul class="nav-links">
+            <a href="/" class="{% if request.path == '/' %}active{% endif %}">首頁</a>
+            <a href="/about" class="{% if request.path == '/about' %}active{% endif %}">關於我們</a>
+            <a href="/products" class="{% if request.path == '/products' %}active{% endif %}">產品介紹</a>
+            <a href="/rent" class="{% if request.path == '/rent' %}active{% endif %}">堆高機租賃</a>
+            <a href="/solutions" class="{% if request.path == '/solutions' %}active{% endif %}">解決方案</a>
+            <a href="/contact" class="{% if request.path == '/contact' %}active{% endif %}">聯絡我們</a>
+            <a href="/news" class="{% if request.path == '/news' %}active{% endif %}">最新消息</a>
+        </ul>
+    </nav>
+
+    <!-- 內容區塊 (不同頁面會變動) -->
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let currentIndex = 0;
+            const slides = document.querySelectorAll('.slideshow-container img'); // 圖片
+            const dots = document.querySelectorAll('.dot'); // 圓點指示器
+            const slogan = document.querySelector('.slideshow-slogan'); // 標語
+            const content = document.querySelector('.slideshow-content'); // 內容
+            const hyperlinkbuttonGroup = document.querySelector('.hyperlink'); // 取得按鈕容器
+            const button1 = hyperlinkbuttonGroup.querySelectorAll('.btn1 a'); // 按鈕1
+            const button2 = hyperlinkbuttonGroup.querySelectorAll('.btn2 a'); // 按鈕2
+
+            const prevButton = document.querySelector(".controls .prev"); // 上一張按鈕
+            const nextButton = document.querySelector(".controls .next"); // 下一張按鈕
+    
+            // 定義每張圖片的文字內容
+            const slideSlogans = [
+                "EQUIPMENT",
+                "EXPERT",
+                "TECHNOLOGY"
+            ];
+            const slideContents = [
+                "設備因人而生<br><span style='margin-left: 5em;'>就該竭盡滿足需求</span>",
+                "用腦運搬的專家<br><span style='margin-left: 5em;'>THINK BEFORE LIFT</span>",
+                "科技與傳統結合<br><span style='margin-left: 5em;'>定義運搬新世代</span>"
+            ];
+    
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+                
+                // 更新圓點狀態
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+                
+                // 更新文字內容
+                slogan.innerHTML = slideSlogans[index];
+                content.innerHTML = slideContents[index];
+                
+                // 重新觸發動畫
+                restartAnimation(slogan);
+                restartAnimation(content);
+                [...button1, ...button2].forEach(restartAnimation);
+            }
+            
+            function restartAnimation(element) {
+                element.classList.remove('show', 'animated');
+                void element.offsetWidth; // 觸發 DOM 重繪
+                element.classList.add('show', 'animated');
+            }
+            
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slides.length;
+                showSlide(currentIndex);
+            }
+        
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                showSlide(currentIndex);
+            }
+
+            function changeSlide(index) {
+                currentIndex = index;
+                showSlide(currentIndex);
+            }
+    
+            // 🔹 自動輪播，每 10 秒切換一次
+            let slideInterval = setInterval(nextSlide, 10000);
+    
+            // 🔹 綁定按鈕點擊事件
+            prevButton.addEventListener("click", function () {
+                clearInterval(slideInterval); // 先清除計時器，避免衝突
+                prevSlide();
+                slideInterval = setInterval(nextSlide, 10000); // 重新啟動自動輪播
+            });
+    
+            nextButton.addEventListener("click", function () {
+                clearInterval(slideInterval);
+                nextSlide();
+                slideInterval = setInterval(nextSlide, 10000);
+            });
+
+            // 綁定圓點點擊事件
+            dots.forEach((dot, index) => {
+                dot.addEventListener("click", function () {
+                    changeSlide(index);
+                });
+            });
+            
+            // 初次載入時，顯示第一張圖片與文字
+            showSlide(currentIndex);
+        });
+    </script>
+    
+</body>
+</html>

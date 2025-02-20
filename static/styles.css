@@ -1,0 +1,256 @@
+/* 導覽列 */
+.navbar {
+    position: fixed;  /* 固定在視窗上 */
+    z-index: 1000; /* 確保導覽列在最上層 */
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between; /* LOGO 靠左，分頁連結靠右 */
+    background-color: #ffffff; /* 設定背景為白色 */
+    padding: 0px 0px; /* 導覽列內間距 */
+    gap: 0px; /* LOGO 與分頁連結間距 */
+    width: 100%; /* 導覽列寬度 */
+    height: 60px; /* 設定導覽列高度 */
+}
+
+/* LOGO */
+.logo {
+    margin-right: 0px; /* LOGO 與分頁間距 */
+    display: block; /* 讓 LOGO 以區塊元素呈現 */
+    align-items: center; /* 垂直置中 */
+}
+.logo img {
+    height: 100%; /* LOGO 高度 */
+    width: auto; /* LOGO 寬度 */
+    max-height: 60px; /* LOGO 最大高度 */
+}
+
+/* 分頁連結 */
+.nav-links {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+/* 分頁連結樣式 */
+.nav-links li {
+    display: inline-block;
+}
+.nav-links a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: bold;
+    padding: 20px 15px;
+    transition: color 0.3s;
+}
+/* 滑鼠懸停時 */
+.nav-links a:hover {
+    color: #797978; 
+}
+/* 目前所在頁面的高亮顏色 */
+.nav-links a.active {
+    color: #e9b60e;
+    font-weight: bold;
+    border-bottom: 3px solid #e9b60e; /* 底部加黃色線 */
+}
+
+/* ----------------------------------------------------------------------------- */
+/* 輪播圖片區塊 */
+.slideshow-container {
+position: relative;
+padding-top: 60px;
+width: 100%;  /* 限制圖片寬度 */
+height: 600px; /* 限制圖片高度 */
+max-width: 2000px;
+overflow: hidden;  /* 隱藏超出的部分 */
+}
+.slideshow-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 確保圖片填滿區塊 */
+    object-position: center bottom 15%; /* 讓圖片顯示底部 */
+    display: none;
+}
+.slideshow-container img.active {
+    display: block;
+}
+
+/* ----------------------------------------------------------------------------- */
+/* 圓點容器 */
+.dot-container {
+    text-align: center;
+    position: absolute;
+    bottom: 20px;  /* 調整位置，確保不被隱藏 */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10; /* 確保圓點在圖片上方 */
+    background: transparent; /* 背景透明 */
+    padding: 5px 10px; /* 增加間距 */
+    border-radius: 20px;
+}
+
+/* 圓點樣式 */
+.dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 0 3px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+/* 當前圖片的圓點較大 */
+.dot.active {
+    background-color: #ffffff;
+    transform: scale(1.6); /* 圓點變大 */
+}
+
+/* ----------------------------------------------------------------------------- */
+/* slogan文字 */
+.slideshow-slogan {
+    position: absolute;
+    bottom: 55%;
+    left: 25%;
+    font-size: 64px;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 8px;
+    
+    /* 讓文字透明，但保留白色邊框 */
+    color: transparent; 
+    -webkit-text-stroke: 1px white; /* 定義邊框粗細與顏色 */
+    
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+/* 進場動畫 */
+.slideshow-slogan.show {
+    animation: sloganfadeInUp 1.5s ease-out forwards;
+}
+/* 定義 btnfadeInUp 動畫 */
+@keyframes sloganfadeInUp {
+    from {
+        opacity: 0;
+        transform: translateX(-200px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+/* ----------------------------------------------------------------------------- */
+/* content文字 */
+.slideshow-content {
+    position: absolute;
+    bottom: 40%;
+    left: 5%;
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 3px; /* 增加字母間距 */
+    padding: 20px;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+/* 進場動畫 */
+.slideshow-content.show {
+    animation: contentfadeInUp 0.6s ease-out forwards;
+}
+/* 定義 btnfadeInUp 動畫 */
+@keyframes contentfadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ----------------------------------------------------------------------------- */
+.hyperlink {
+    position: absolute;
+    bottom: 35%; /* 控制按鈕距離底部的距離 */
+    left: 24%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 40px; /* 兩個按鈕之間的固定距離 */
+}
+
+/* 超連結1按鈕 */
+.hyperlink .btn1 a {
+    background-color: rgba(243, 175, 41, 1);
+    color: rgb(255, 255, 255);
+    padding: 15px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+/* 超連結2按鈕 */
+.hyperlink .btn2 a {
+    background-color: rgb(141, 141, 141);
+    color: rgb(255, 255, 255);
+    padding: 15px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+/* 滑鼠懸停 */
+.hyperlink .btn1 a:hover {
+    background-color: rgb(217, 148, 10);
+}
+.hyperlink .btn2 a:hover {
+    background-color: rgb(103, 102, 102);
+}
+
+/* 按鈕動畫 */
+.hyperlink .btn1 a.animated, .hyperlink .btn2 a.animated {
+    animation: btnfadeInUp 0.8s ease-out forwards;
+}
+/* 定義 btnfadeInUp 動畫 */
+@keyframes btnfadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* ----------------------------------------------------------------------------- */
+
+/* 控制按鈕區塊 */
+.controls {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    gap: 10px;
+}
+/* 控制按鈕樣式 */
+.controls button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+/* 滑鼠移上去時加深顏色 */
+.controls button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* ----------------------------------------------------------------------------- */
+

@@ -1,0 +1,12 @@
+# 建立鏡像
+docker build -t web1 .
+
+# 啟動容器
+docker run --rm -p 5000:5000 -v :/app web1
+
+# 使用 flask --reload 自動更新
+docker run --rm -p 5000:5000 -v ${PWD}:/app web1
+
+# ----------------------------------------------------
+# 使用docker-compose建立
+docker-compose up --build

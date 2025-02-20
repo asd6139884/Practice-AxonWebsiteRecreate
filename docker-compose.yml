@@ -1,0 +1,11 @@
+version: '1'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      FLASK_APP: app.py
+      FLASK_ENV: development  # 啟用 Flask 自動重載

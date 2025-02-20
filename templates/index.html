@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}AXON勤工-用腦運搬的專家 | 首頁{% endblock %}
+
+{% block head %}
+<style>
+    /* 服務區塊 */
+    .service-section {
+        position: relative;
+        width: 100%;
+        height: 1000px;
+        margin: 0px auto;
+        padding: 0px;
+        background-color: #2e2e2e;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden; /* 確保圖片不超出區塊 */
+    }
+
+    .service-title {
+        position: absolute;
+        top: 80px;
+        left: 180px;
+        font-size: 48px;
+        font-weight: bold;
+        color: rgba(233, 175, 14, 1);
+        margin-bottom: 15px;
+        text-align: left;
+        z-index: 2;
+    }
+    .service-slogan {
+        position: absolute;
+        top: 30px;
+        left: 120px;
+        font-size: 150px;
+        font-weight: bold;
+        /* 讓文字透明，但保留白色邊框 */
+        color: transparent; 
+        -webkit-text-stroke: 0.3px rgba(210, 105, 30, 0.5); /* 定義邊框粗細與顏色 */
+        z-index: 1;
+    }
+
+    /* 讓文字位於圖片左下角 */
+    .image-text {
+        position: absolute;
+        left: 10px;
+        bottom: 20px;
+        color: white;
+        font-size: 28px;
+        font-weight: bold;
+        padding: 8px 20px;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column; /* 讓「了解更多」在下方 */
+        align-items: flex-start; /* 讓文字靠左對齊 */
+        pointer-events: none; /* 讓滑鼠事件穿透，避免影響 a:hover */
+    }
+    .learn-more {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        gap: 5px; /* 讓文字和 + 符號之間有間距 */
+        pointer-events: auto; /* 允許 + 號可被點擊 */
+    }
+    /* + 符號的背景色塊 */
+    .plus-box {
+        display: inline-block;
+        width: 35px; /* 設定正方形 */
+        height: 35px;
+        background-color: orange; /* 橘色背景 */
+        color: white; /* + 的顏色 */
+        font-size: 18px;
+        text-align: center;
+        line-height: 35px; /* 讓 + 垂直置中 */
+        border-radius: 3px; /* 讓邊角稍微圓滑 */
+        margin-left: 5px; /* 與文字的間距 */
+        pointer-events: auto; /* 允許點擊 */
+    }
+
+    .service-images {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(4, 300px);
+        grid-template-rows:  repeat(2, 300px);
+        gap: 0px;  /* 確保圖片之間沒有空隙 */
+        width: 65%; /* 控制整體圖片區域寬度 */
+        height: 85%;  /* 控制整體圖片區域高度 */
+        margin: auto;  /* 置中對齊 */
+        padding: 0;
+        top: 50%;
+        transform: translateY(-40%);  /* 微調垂直位置 */
+    }
+    /* 圖片連結樣式 */
+    .service-images img {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: block;
+        object-fit: cover;
+        border: 1px solid white; /* 設定白色邊框 */
+    }
+    .service-images a {
+        position: relative;
+        display: block;
+        overflow: hidden;
+    }
+    /* 控制圖片大小，讓它們組成不規則排列 */
+    .img1 { grid-column: span 2; grid-row: span 1; } /* 佔 2 格寬 */
+    .img2 { grid-column: span 1; grid-row: span 1; } /* 佔 2 格高 */
+    .img3 { grid-column: span 1; grid-row: span 1; } /* 1 格標準 */
+    .img4 { grid-column: span 1; grid-row: span 1; } /* 佔 2 格寬 */
+    .img5 { grid-column: span 1; grid-row: span 1; } /* 佔 2 格高 */
+    .img6 { grid-column: span 2; grid-row: span 1; } /* 佔 2 格寬 */
+
+
+    /* 滑鼠懸停時的效果 */
+    .service-images a:hover img {
+        filter: brightness(0.5); /* 圖片變暗 */
+        transform: scale(1.1);
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="slideshow-container">
+        <img src="{{ url_for('static', filename='loop/loop1.jpg') }}" class="active">
+        <img src="{{ url_for('static', filename='loop/loop2.jpg') }}">
+        <img src="{{ url_for('static', filename='loop/loop3.jpg') }}">
+
+        <!-- slogan文字 -->
+        <div class="slideshow-slogan"></div>
+        <!-- content文字 -->
+        <div class="slideshow-content"></div>
+        
+        <!-- 兩個超連結按鈕 -->
+        <div class="hyperlink">
+            <div class="btn1">
+                <a href="/products">尋找產品</a>
+            </div>
+            <div class="btn2">
+                <a href="/solutions">提供最佳搬運方案</a>
+            </div>
+        </div>
+
+        <!-- 控制按鈕 -->
+        <div class="controls">
+            <button class="prev">❮ 上一張</button>
+            <button class="next">下一張 ❯</button>
+        </div>
+
+        <!-- 圓點指示器 -->
+        <div class="dot-container">
+            <span class="dot" onclick="changeSlide(0)"></span>
+            <span class="dot" onclick="changeSlide(1)"></span>
+            <span class="dot" onclick="changeSlide(2)"></span>
+        </div>
+    </div>
+
+    <section class="service-section">
+        <div class="service-slogan">SERVICE</div>
+        <div class="service-title">提供最佳搬運方案</div>
+
+        <!-- 圖片超連結區 -->
+        <div class="service-images">
+            <a href="/products" class="img1">
+                <img src="{{ url_for('static', filename='FrontPage/serivce/LogisticsIndustry.jpg') }}">
+                <div class="image-text">物流業
+                    <div class="learn-more">了解更多 <span class="plus-box">+</span></div>
+                </div>
+            </a>
+            <a href="/products" class="img2">
+                <img src="{{ url_for('static', filename='FrontPage/serivce/FoodIndustry.jpg') }}">
+                <div class="image-text">食品業
+                    <div class="learn-more">了解更多 <span class="plus-box">+</span></div>
+                </div>
+            </a>
+            <a href="/products" class="img3">
+                <img src="{{ url_for('static', filename='FrontPage/serivce/Manufacturing.jpg') }}">
+                <div class="image-text">製造業
+                    <div class="learn-more">了解更多 <span class="plus-box">+</span></div>
+                </div>
+            </a>
+            <a href="/products" class="img4">
+                <img src="{{ url_for('static', filename='FrontPage/serivce/RetailIndustry.jpg') }}">
+                <div class="image-text">流通零售業
+                    <div class="learn-more">了解更多 <span class="plus-box">+</span></div>
+                </div>
+            </a>
+            <a href="/products" class="img5">
+                <img src="{{ url_for('static', filename='FrontPage/serivce/TextileIndustry.jpg') }}">
+                <div class="image-text">紡織業
+                    <div class="learn-more">了解更多 <span class="plus-box">+</span></div>
+                </div>
+            </a>
+            <a href="/products" class="img6">
+                <img src="{{ url_for('static', filename='FrontPage/serivce/AutomatedFactory.jpg') }}">
+                <div class="image-text">自動化廠房
+                    <div class="learn-more">了解更多 <span class="plus-box">+</span></div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+{% endblock %}
+

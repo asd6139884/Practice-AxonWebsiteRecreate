@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block title %}AXON勤工-用腦運搬的專家 | 關於我們{% endblock %}
+
+{% block head %}
+<style>
+    /* 公司簡介區塊 */
+    .about-section {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 2000px;
+        margin: 0px;
+        text-align: left;
+        gap: 10px;
+        padding: 20px;
+        background-color: rgb(78, 78, 78); /* 設定背景為淺灰色 */
+    }
+    .about-section img {
+        width: 1000px;
+        height: 800px;
+        object-fit: cover; /* 確保圖片填滿並保持比例 */
+        overflow: hidden;  /* 隱藏超出的部分 */
+        object-position: center; /* 讓圖片顯示中間部分 */
+        border-radius: 10px;
+        display: block;
+    }
+    .about-text {
+        width: 40%;
+        line-height: 1.6;
+    }
+
+    /* 發展歷程區塊 */
+    .history-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 2000px;
+    height: auto;
+    text-align: center;
+    padding: 50px 0;
+    background-color: rgb(249, 178, 51); /* 背景顏色 */
+    z-index: -1;
+    }
+    .history-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: rgb(51, 50, 50);
+    margin-top: 50px;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+    }
+
+    /* 時間軸區塊 */
+    .timeline-container {
+        position: relative;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        overflow: hidden; /* 限制滾動範圍 */
+        white-space: nowrap; /* 避免換行 */
+    }
+    /* 內部的可滾動時間軸 */
+    .timeline-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 50px; /* 每個事件的間距 */
+        transition: transform 0.5s ease-in-out;
+    }
+    /* 單個時間點 */
+    .timeline-item {
+        position: relative;
+        min-width: 250px; /* 設定固定寬度，避免縮放錯位 */
+        background-color: transparent;
+        text-align: center;
+    }
+    /* 上下區塊 */
+    .top-content, .bottom-content {
+        display: flex;
+        flex-direction: column;
+        width: 250px;
+        min-height: 160px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        box-sizing: border-box;
+    }
+    /* 若內容為空，則隱藏邊框但保留空間 */
+    .top-content:empty, .bottom-content:empty {
+        background: none;
+        border: none;
+    }
+    /* 文字樣式 */
+    .timeline-item h3 {
+        color: rgb(255, 255, 255);
+        font-family: "Noto Sans", Sans-serif;
+        font-size: 46px;
+        font-weight: 700;
+        font-style: italic;
+        letter-spacing: 2.7px;
+        margin-top : 100px;
+        margin-bottom: 0px;
+    }
+    .timeline-item p {
+        color: rgb(96, 62, 3);
+        font-family: "Noto Sans", Sans-serif;
+        font-weight: 700;
+        margin-top : 0px;
+        margin-bottom: 100px;
+        white-space: normal;
+        display: block;
+        font-size: 16px;
+    }
+    /* 圖片 */
+    .timeline-item img {
+        width: 250px;
+        height: auto;
+        border-radius: 10%;
+        object-fit: cover;
+        margin: 5px;
+    }
+
+    /* 菱形節點 */
+    .timeline-item::before {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background-color: #333;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+        z-index: 1;
+    }
+    /* 中心橫線 */
+    .timeline-container::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: #333;
+        transform: translateY(-50%);
+        z-index: 1;
+    }
+    /* 垂直連接線 */
+    .timeline-item::after {
+        content: "";
+        position: absolute;
+        width: 4px;  /* 線的寬度 */
+        height: 40px;  /* 線的高度，可調整 */
+        background-color: #333;  /* 線的顏色 */
+        top: calc(50% - 20px);  /* 垂直置中 */
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    /* 箭頭按鈕 */
+    .arrow-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+        transition: background 0.3s;
+        z-index: 10;
+    }
+    .arrow-btn:hover {
+        background-color: rgba(0, 0, 0, 1);
+    }
+    .left-arrow {
+        left: -50px;
+    }
+    .right-arrow {
+        right: -50px;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="slideshow-container">
+        <img src="{{ url_for('static', filename='loop/loop1.jpg') }}" class="active">
+        <img src="{{ url_for('static', filename='loop/loop2.jpg') }}">
+        <img src="{{ url_for('static', filename='loop/loop3.jpg') }}">
+
+        <!-- slogan文字 -->
+        <div class="slideshow-slogan"></div>
+        <!-- content文字 -->
+        <div class="slideshow-content"></div>
+        
+        <!-- 兩個超連結按鈕 -->
+        <div class="hyperlink">
+            <div class="btn1">
+                <a href="/products">尋找產品</a>
+            </div>
+            <div class="btn2">
+                <a href="/solutions">提供最佳搬運方案</a>
+            </div>
+        </div>
+
+        <!-- 控制按鈕 -->
+        <div class="controls">
+            <button class="prev">❮ 上一張</button>
+            <button class="next">下一張 ❯</button>
+        </div>
+        
+        <!-- 圓點指示器 -->
+        <div class="dot-container">
+            <span class="dot" onclick="changeSlide(0)"></span>
+            <span class="dot" onclick="changeSlide(1)"></span>
+            <span class="dot" onclick="changeSlide(2)"></span>
+        </div>
+    </div>
+
+    <div class="about-section">
+        <img src="{{ url_for('static', filename='about/about.png') }}" alt="關於我們">
+        <div class="about-text">
+            <p>{{ about_html | safe  }}</p>
+        </div>
+    </div>
+
+    <div class="history-section">
+        <div class="history-title">發展歷程</div>
+        
+        <div class="timeline-container">
+            <button class="arrow-btn left-arrow">◀</button> <!-- 左箭頭按鈕 -->
+            <div class="timeline-wrapper">
+                <div class="timeline-item">
+                    <div class="top-content">
+                        <img src="static/about/history/axon_established.png" alt="Bendi">
+                    </div>
+                    <div class="bottom-content">
+                        <h3>1996</h3>
+                        <p>勤工成立</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="top-content">
+                        <h3>1999</h3>
+                        <p>成為加拿大貨叉品牌 Kenhar 台灣總代理</p>
+                    </div>
+                    <div class="bottom-content">
+                        <img src="static/about/history/kenhar.png" alt="Kenhar">
+                    </div>
+                </div>
+        
+                <div class="timeline-item">
+                    <div class="top-content">
+                    </div>
+                    <div class="bottom-content">
+                        <h3>2000</h3>
+                        <p>成為全球前三大特殊配備品牌 Cascade 台灣總經銷</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="top-content">
+                        <h3>2002</h3>
+                        <p>引進德國 Hoesch 型鋼用於棧槓製造</p>
+                    </div>
+                    <div class="bottom-content">
+                        <img src="static/about/history/hoesch.png" alt="Hoesch">
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="top-content">
+                        <img src="static/about/history/bendi.png" alt="Bendi">
+                    </div>
+                    <div class="bottom-content">
+                        <h3>2013</h3>
+                        <p>OEM 英國品牌 Bendi 窄通道式堆高機之棧槓</p>
+                    </div>
+                </div>
+
+
+            </div>
+            <button class="arrow-btn right-arrow">▶</button> <!-- 右箭頭按鈕 -->
+        </div>
+    </div>
+
+
+            <!-- <div class="timeline-item">
+                <h3>2002</h3>
+                <img src="static/about/history/hoesch.png" alt="Hoesch">
+                <p>引進德國 Hoesch 型鋼用於棧槓製造</p>
+            </div>
+            <div class="timeline-item">
+                <h3>2013</h3>
+                <img src="static/about/history/bendi.png" alt="Bendi">
+                <p>OEM 英國品牌 Bendi 窄通道式堆高機之棧槓</p>
+            </div>
+            <div class="timeline-item">
+                <h3>2014</h3>
+                <p>開發出四節式特殊型棧槓</p>
+            </div>
+            <div class="timeline-item">
+                <h3>2017</h3>
+                <img src="static/about/history/liugong.png" alt="LiuGong">
+                <p>柳工堆高機台灣總代理</p>
+            </div>
+            <div class="timeline-item">
+                <h3>2017</h3>
+                <img src="static/about/history/axon.png" alt="AXON">
+                <p>成立 AXON 品牌</p> -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let currentIndex = 0;
+            const timeline = document.querySelector(".timeline-wrapper");
+            const timelineItems = document.querySelectorAll(".timeline-item");
+            const itemWidth = timelineItems[0].offsetWidth + 40; // 包含間距
+            const visibleItems = Math.floor(document.querySelector(".timeline-container").offsetWidth / itemWidth);
+            const maxIndex = Math.max(0, timelineItems.length - visibleItems);
+
+            function moveTimeline(direction) {
+                currentIndex += direction;
+
+                if (currentIndex < 0) {
+                    currentIndex = 0;
+                } else if (currentIndex > maxIndex) {
+                    currentIndex = maxIndex;
+                }
+
+                timeline.style.transform = `translateX(${-currentIndex * itemWidth}px)`;
+            }
+
+            document.querySelector(".left-arrow").addEventListener("click", function () {
+                moveTimeline(-1);
+            });
+
+            document.querySelector(".right-arrow").addEventListener("click", function () {
+                moveTimeline(1);
+            });
+
+            // 防止縮放時計算錯誤
+            window.addEventListener("resize", function () {
+                currentIndex = 0;
+                moveTimeline(0);
+            });
+        });
+    </script>
+{% endblock %}
+
