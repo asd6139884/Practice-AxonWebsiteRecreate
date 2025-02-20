@@ -127,9 +127,9 @@
 
 {% block content %}
     <div class="slideshow-container">
-        <img src="{{ url_for('static', filename='loop/loop1.jpg') }}" class="active">
-        <img src="{{ url_for('static', filename='loop/loop2.jpg') }}">
-        <img src="{{ url_for('static', filename='loop/loop3.jpg') }}">
+        <img src="{{ url_for('static', filename='loop/loop1.jpg') }}" class="active" alt="Slideshow Image 1">
+        <img src="{{ url_for('static', filename='loop/loop2.jpg') }}" alt="Slideshow Image 2">
+        <img src="{{ url_for('static', filename='loop/loop3.jpg') }}" alt="Slideshow Image 3">
 
         <!-- slogan文字 -->
         <div class="slideshow-slogan"></div>
@@ -148,18 +148,19 @@
 
         <!-- 控制按鈕 -->
         <div class="controls">
-            <button class="prev">❮ 上一張</button>
-            <button class="next">下一張 ❯</button>
+            <button class="prev" aria-label="Previous slide">❮ 上一張</button>
+            <button class="next" aria-label="Next slide">下一張 ❯</button>
         </div>
 
         <!-- 圓點指示器 -->
         <div class="dot-container">
-            <span class="dot" onclick="changeSlide(0)"></span>
-            <span class="dot" onclick="changeSlide(1)"></span>
-            <span class="dot" onclick="changeSlide(2)"></span>
+            <button class="dot" onclick="changeSlide(0)" aria-label="Go to slide 1"></button>
+            <button class="dot" onclick="changeSlide(1)" aria-label="Go to slide 2"></button>
+            <button class="dot" onclick="changeSlide(2)" aria-label="Go to slide 3"></button>
         </div>
     </div>
 
+    <!-- ----------------------------------------------------------------------------------------------- -->
     <section class="service-section">
         <div class="service-slogan">SERVICE</div>
         <div class="service-title">提供最佳搬運方案</div>
@@ -204,6 +205,9 @@
             </a>
         </div>
     </section>
+
+    <!-- ----------------------------------------------------------------------------------------------- -->
+     
 
 {% endblock %}
 

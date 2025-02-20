@@ -93,19 +93,28 @@ overflow: hidden;  /* 隱藏超出的部分 */
 /* 圓點樣式 */
 .dot {
     display: inline-block;
-    width: 8px;
-    height: 8px;
-    margin: 0 3px;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
     background-color: #ffffff;
+    border: none;  /* 移除按鈕預設邊框 */
     border-radius: 50%;
     cursor: pointer;
     transition: transform 0.3s, background-color 0.3s;
+    outline: none; /* 移除點擊時的外框 */
+    padding: 0; /* 避免按鈕內邊距影響大小 */
 }
 
 /* 當前圖片的圓點較大 */
 .dot.active {
     background-color: #ffffff;
     transform: scale(1.6); /* 圓點變大 */
+}
+
+/* 按鈕點擊時防止出現藍色外框（僅適用於部分瀏覽器） */
+.dot:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 /* ----------------------------------------------------------------------------- */
