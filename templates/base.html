@@ -7,13 +7,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- 引入 CSS 樣式表 -->
     {% block head %}{% endblock %} <!-- 自訂樣式表 -->
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo.ico') }}"> <!-- 網站圖示 -->
-    <style>
+
+
+    <!-- 引入 Font Awesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+    <!-- <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             text-align: center;
         }
-    </style>
+    </style> -->
 </head>
 <body>
     <!-- 導覽列 -->
@@ -25,23 +31,98 @@
             </a>
         </div>
 
-        <!-- 分頁連結 -->
-        <ul class="nav-links">
-            <a href="/" class="{% if request.path == '/' %}active{% endif %}">首頁</a>
-            <a href="/about" class="{% if request.path == '/about' %}active{% endif %}">關於我們</a>
-            <a href="/products" class="{% if request.path == '/products' %}active{% endif %}">產品介紹</a>
-            <a href="/rent" class="{% if request.path == '/rent' %}active{% endif %}">堆高機租賃</a>
-            <a href="/solutions" class="{% if request.path == '/solutions' %}active{% endif %}">解決方案</a>
-            <a href="/contact" class="{% if request.path == '/contact' %}active{% endif %}">聯絡我們</a>
-            <a href="/news" class="{% if request.path == '/news' %}active{% endif %}">最新消息</a>
+        <!-- 導覽選單 (桌面版) -->
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">首頁</a></li>
+            <li><a href="/about" class="{% if request.path == '/about' %}active{% endif %}">關於我們</a></li>
+            <li><a href="/products" class="{% if request.path == '/products' %}active{% endif %}">產品介紹</a></li>
+            <li><a href="/rent" class="{% if request.path == '/rent' %}active{% endif %}">堆高機租賃</a></li>
+            <li><a href="/solutions" class="{% if request.path == '/solutions' %}active{% endif %}">解決方案</a></li>
+            <li><a href="/contact" class="{% if request.path == '/contact' %}active{% endif %}">聯絡我們</a></li>
+            <li><a href="/news" class="{% if request.path == '/news' %}active{% endif %}">最新消息</a></li>
         </ul>
+
+        <!-- 漢堡按鈕 -->
+        <button class="menu-toggle" id="menuToggle">
+            ☰
+        </button>
     </nav>
+
+
+    <!-- 行動版選單 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <!-- 行動版導覽連結 -->
+        <ul class="mobile-nav-links">
+            <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">首頁</a></li>
+            <li><a href="/about" class="{% if request.path == '/about' %}active{% endif %}">關於我們</a></li>
+            <li><a href="/products" class="{% if request.path == '/products' %}active{% endif %}">產品介紹</a></li>
+            <li><a href="/rent" class="{% if request.path == '/rent' %}active{% endif %}">堆高機租賃</a></li>
+            <li><a href="/solutions" class="{% if request.path == '/solutions' %}active{% endif %}">解決方案</a></li>
+            <li><a href="/contact" class="{% if request.path == '/contact' %}active{% endif %}">聯絡我們</a></li>
+            <li><a href="/news" class="{% if request.path == '/news' %}active{% endif %}">最新消息</a></li>
+        </ul>
+        
+        <!-- 聯絡資訊 -->
+        <div class="contact-info">
+            <h3>聯絡我們</h3>
+            <p>我們相信運搬不只是人力的事，更是腦力的事。專注用最少的人力，創造搬運最大的可能性！立即聯繫我們，讓我們為您規劃最合適的解決方案。</p>
+            <p><i class="fas fa-phone"></i> (04) 2568-9840</p>
+            <p><i class="fas fa-envelope"></i> service@chingkung.com.tw</p>
+            <p><i class="fas fa-map-marker-alt"></i> 428台中市大雅區神林路一段267巷26號</p>
+            
+            <!-- 社群媒體連結 -->
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-line"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
 
     <!-- 內容區塊 (不同頁面會變動) -->
     <div class="content">
         {% block content %}{% endblock %}
     </div>
+    
     <script>
+        // 漢堡選單功能
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuToggle = document.getElementById("menuToggle");
+            const mobileMenu = document.getElementById("mobileMenu");
+            
+            // 點擊漢堡按鈕切換行動版選單顯示
+            menuToggle.addEventListener("click", function() {
+                mobileMenu.classList.toggle("show");
+                // 切換漢堡按鈕圖示
+                if (mobileMenu.classList.contains("show")) {
+                    menuToggle.innerHTML = "✕";
+                } else {
+                    menuToggle.innerHTML = "☰";
+                }
+            });
+            
+            // 點擊行動版選單的連結時自動關閉選單
+            const mobileLinks = document.querySelectorAll(".mobile-nav-links a");
+            mobileLinks.forEach(link => {
+                link.addEventListener("click", function() {
+                    mobileMenu.classList.remove("show");
+                    menuToggle.innerHTML = "☰";
+                });
+            });
+            
+            // 點擊行動選單以外的區域時關閉選單
+            document.addEventListener("click", function(event) {
+                if (!mobileMenu.contains(event.target) && 
+                    !menuToggle.contains(event.target) && 
+                    mobileMenu.classList.contains("show")) {
+                    mobileMenu.classList.remove("show");
+                    menuToggle.innerHTML = "☰";
+                }
+            });
+        });
+
         document.addEventListener("DOMContentLoaded", function () {
             let currentIndex = 0;
             const slides = document.querySelectorAll('.slideshow-container img'); // 圖片
@@ -108,10 +189,10 @@
                 showSlide(currentIndex);
             }
     
-            // 🔹 自動輪播，每 10 秒切換一次
+            // 自動輪播，每 10 秒切換一次
             let slideInterval = setInterval(nextSlide, 10000);
     
-            // 🔹 綁定按鈕點擊事件
+            // 綁定按鈕點擊事件
             prevButton.addEventListener("click", function () {
                 clearInterval(slideInterval); // 先清除計時器，避免衝突
                 prevSlide();
