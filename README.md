@@ -1,10 +1,17 @@
 這是參考 AXON勤工公司網站 做重製地練習。
 
+使用 Docker 建立開發環境，讓專案更容易部署與管理。
+
 網站使用 Python Flask 作為後端框架，結合現代的前端技術，提供了響應式設計和流暢的用戶體驗。
 
 網站風格專業且現代，使用動畫效果和互動元素增強用戶參與度。
 
 ## 技術與架構
+Docker：
+- Dockerfile 定義應用程式環境
+- docker-compose.yml 來管理應用程式容器
+- requirements.txt 記錄應用程式所需的 Python 套件
+
 後端：
 - 程式語言：Python
 - Web 框架：Flask
