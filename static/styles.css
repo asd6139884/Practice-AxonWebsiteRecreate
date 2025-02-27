@@ -97,12 +97,14 @@ body, html {
 /* 漢堡按鈕 */
 .menu-toggle {
     display: block;
-    background: none;
+    width: 8vh;
+    height: 8vh;
+    background: rgb(249, 178, 51);
     border: none;
     font-size: 24px;
     cursor: pointer;
-    padding: 0 15px;
-    color: #000;
+    padding: 0 1vw;
+    color: rgb(255, 255, 255);
     margin-right: 10px;
 }
 
@@ -110,17 +112,18 @@ body, html {
 .mobile-menu {
     display: none; /* 預設隱藏 */
     position: fixed;
-    top: 60px; /* 與導覽列高度一致 */
-    left: 0;
-    width: 100%;
-    height: calc(100vh - 60px);
-    background-color: rgba(255, 255, 255, 0.95);
+    top: 0; /* 與導覽列高度一致 */
+    right: 0;
+    width: 23vw;
+    height: 100vh;
+    background-color: rgb(10, 18, 41);
     z-index: 999;
     flex-direction: column;
     overflow-y: auto;
-    padding: 20px;
+    padding: 3vw;
     box-sizing: border-box;
     transition: all 0.3s ease;
+    /* box-shadow: -10vw 0 3vw rgba(0, 0, 0, 0.3);  左側陰影 */
 }
 /* 行動版選單的導覽連結 */
 .mobile-menu .mobile-nav-links {
@@ -133,15 +136,15 @@ body, html {
 }
 .mobile-menu .mobile-nav-links a {
     text-decoration: none;
-    color: #000;
-    font-size: 18px;
+    color: rgb(255, 255, 255);
+    font-size: calc(1vw + 1vh);
     display: block;
     padding: 10px 0;
     font-weight: bold;
 }
 .mobile-menu .mobile-nav-links a.active {
-    color: #e9b60e;
-    border-left: 3px solid #e9b60e;
+    color: rgb(233, 182, 14);
+    border-left: 3px solid rgb(233, 182, 14);
     padding-left: 10px;
 }
 
@@ -149,27 +152,122 @@ body, html {
 .contact-info {
     margin-top: 30px;
     padding-top: 20px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid rgb(255, 255, 255);
 }
 .contact-info h3 {
-    font-size: 18px;
+    font-size: 1.5vw;
     margin-bottom: 15px;
-    color: #333;
+    color: rgb(255, 255, 255);
+    padding: 2vh 0vw 1vh 0vw;
 }
 .contact-info p {
     margin-bottom: 10px;
-    font-size: 16px;
-    color: #555;
+    font-size: 1vw;
+    color: rgb(156, 165, 175);
 }
-.contact-info .social-icons {
+.contact-info p i {
+    color: rgb(255, 255, 255); /* 設定 icon 為白色 */
+}
+/* 特定聯絡方式滑鼠懸停效果 */
+.contact-info p.contact-item {
+    transition: color 0.3s ease; /* 平滑過渡效果 */
+    cursor: pointer; /* 顯示指針游標提示可互動 */
+}
+
+/* 聯絡資訊連結樣式 */
+.contact-info p.contact-item a {
+    color: inherit; /* 繼承父元素顏色 */
+    text-decoration: none; /* 移除下劃線 */
+    display: block; /* 讓整個區域可點擊 */
+    transition: color 0.3s ease; /* 平滑過渡效果 */
+}
+
+/* 特定聯絡方式滑鼠懸停時文字變色 */
+.contact-info p.contact-item:hover  {
+    color: #e9b60e;
+}
+/* 特定聯絡方式滑鼠懸停時圖標變色 */
+.contact-info p.contact-item:hover i {
+    color: #e9b60e;
+}
+
+/* 社群媒體icon */
+ .social-icons a {
     display: flex;
-    gap: 15px;
-    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* 設定 icon 的寬度 */
+    height: 40px; /* 設定 icon 的高度，與寬度相同，確保是正方形 */
+    font-size: 20px; /* icon 的大小 */
+    border: 1px solid currentColor; /* 設定邊框顏色與 icon 顏色一致 */
+    border-radius: 5px; /* 設定方形邊角 */
+    text-decoration: none; /* 移除底線 */
+    transition: all 0.3s ease-in-out;
+}
+/* 社群媒體icon樣式 */
+.social-icons {
+    display: flex;
+    gap: 1.5vw;
+    margin-top: 3vh;
 }
 .contact-info .social-icons a {
-    color: #333;
-    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: calc(1vw + 1vh);
+    border: 1px solid;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
 }
+/* 各社群媒體的特定顏色 */
+.contact-info .social-icons a[href*="facebook"] {
+    color: rgb(24, 119, 242); /* Facebook 藍色 */
+    border-color: rgb(24, 119, 242);
+}
+.contact-info .social-icons a[href*="youtube"] {
+    color: rgb(255, 0, 0); /* YouTube 紅色 */
+    border-color: rgb(255, 0, 0);
+}
+.contact-info .social-icons a[href*="cresclab"] {
+    color: rgb(6, 199, 85); /* LINE 綠色 */
+    border-color: rgb(6, 199, 85);
+}
+.contact-info .social-icons a[href*="linkedin"] {
+    color: rgb(10, 102, 194); /* LinkedIn 藍色 */
+    border-color: rgb(10, 102, 194);
+}
+
+/* 滑鼠懸停時，背景變成社群媒體品牌顏色，icon 變白 */
+.contact-info .social-icons a:hover {
+    background-color: currentColor;
+}
+
+.contact-info .social-icons a:hover i {
+    color: white;
+}
+
+/* 黑色透明遮罩 */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* 黑色透明背景 */
+    z-index: 998; /* 確保在大多數元素上方，但在行動選單下方 */
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+/* 遮罩層顯示時的樣式 */
+.overlay.show {
+    display: block;
+    opacity: 1;
+}
+
 /* 顯示行動版選單 */
 .mobile-menu.show {
     display: flex;
@@ -183,10 +281,52 @@ body, html {
         opacity: 1;
     }
 }
-/* 媒體查詢 - 螢幕寬度小於 950px 時的樣式 */
-@media (max-width: 950px) {
+/* 媒體查詢 */
+@media (max-width: 950px) { /* 幕寬度小於 950px 時的樣式 */
+    .mobile-menu {
+        top: 8vh; /* 從導覽列下方開始 */
+        width: 100%;
+        height: 60vh; 
+        background-color: rgb(245, 245, 245); /* 淺色背景 */
+        padding: 2vh 5vw; /* 更合適的內邊距 */
+        right: 0;
+    }
+    .mobile-menu .mobile-nav-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 0;
+    }
+    .mobile-menu .mobile-nav-links li {
+        margin-bottom: 0;
+        border-bottom: 1px solid #e0e0e0; /* 每個項目底部加上分隔線 */
+    }
+    .mobile-menu .mobile-nav-links a {
+        color: #333; /* 深色文字，因為背景是淺色 */
+        font-size: 16px; /* 固定字體大小 */
+        padding: 2vh 0;
+    }
+    .mobile-menu .mobile-nav-links a.active {
+        color: #e9b60e;
+        border-left: 3px solid #e9b60e;
+        padding-left: 10px;
+    }
+    /* 覆蓋原本的聯絡資訊顯示 */
+    .contact-info {
+        display: none !important; /* 小螢幕下強制隱藏聯絡資訊 */
+    }
     .nav-links {
         display: none; /* 隱藏桌面導覽 */
+    }
+    /* 漢堡按鈕在小螢幕上顯示 */
+    .menu-toggle {
+        display: block;
+    }
+}
+@media (min-width: 951px) { /*幕寬度大於 950px 時的樣式 */
+    /* 漢堡按鈕依然可見，但樣式可能需要調整 */
+    .menu-toggle {
+        display: block;
     }
 }
 
