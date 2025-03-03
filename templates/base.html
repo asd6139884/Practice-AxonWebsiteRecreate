@@ -83,6 +83,59 @@
         <a href="mailto:service@chingkung.com.tw" class="icon-box"><i class="fas fa-envelope"></i></a>
     </div>
 
+    <!-- 右下角訊息小視窗 -->
+    <div class="chat-widget">
+        <!-- 聊天按鈕 -->
+        <div class="chat-button" id="chatButton">
+            <i class="fas fa-comments"></i>
+        </div>
+        
+        <!-- 聊天視窗 -->
+        <div class="chat-container" id="chatContainer">
+            <!-- 視窗頭部 -->
+            <div class="chat-header">
+                <h3>Zena 運搬智囊團</h3>
+                <div class="chat-close" id="chatClose">×</div>
+            </div>
+            
+            <!-- 聯絡方式選擇區 -->
+            <div class="contact-options" id="contactOptions">
+                <p>請選擇聯絡方式</p>
+                <div class="option" id="liveChat">
+                    <i class="fas fa-comment"></i>
+                    <span>即時聊天</span>
+                </div>
+                <div class="option" id="emailContact">
+                    <i class="fas fa-envelope"></i>
+                    <span>電子郵件聯絡</span>
+                </div>
+                <div class="option" id="phoneContact">
+                    <i class="fas fa-phone"></i>
+                    <span>電話聯絡</span>
+                </div>
+                <div class="option" id="lineContact">
+                    <i class="fab fa-line"></i>
+                    <span>Line 客服</span>
+                </div>
+            </div>
+            
+            <!-- 訊息區域 (初始隱藏) -->
+            <div class="chat-messages" id="chatMessages" style="display: none;">
+                <div class="chat-messages-container" id="messagesContainer">
+                    <!-- 消息會被添加到這裡 -->
+                    <div class="message agent">您好！請問有什麼我可以幫助您的嗎？</div>
+                </div>
+            </div>
+            
+            <!-- 輸入區域 (初始隱藏) -->
+            <div class="chat-input" id="chatInput" style="display: none;">
+                <input type="text" id="messageInput" placeholder="請輸入訊息...">
+                <button id="sendButton">發送</button>
+            </div>
+        </div>
+    </div>
+
+
     <!-- 內容區塊 (不同頁面會變動) -->
     <div class="content">
         {% block content %}{% endblock %}
@@ -259,5 +312,117 @@
         });
     </script>
     
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        // 獲取元素
+        const chatButton = document.getElementById('chatButton');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatClose = document.getElementById('chatClose');
+        const contactOptions = document.getElementById('contactOptions');
+        const liveChat = document.getElementById('liveChat');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const messagesContainer = document.getElementById('messagesContainer');
+        
+        // 點擊聊天按鈕打開聊天視窗
+        chatButton.addEventListener('click', function() {
+            chatContainer.classList.add('show');
+        });
+        
+        // 點擊關閉按鈕關閉聊天視窗
+        chatClose.addEventListener('click', function() {
+            chatContainer.classList.remove('show');
+            // 重置聊天視窗狀態
+            contactOptions.style.display = 'flex';
+            chatMessages.style.display = 'none';
+            chatInput.style.display = 'none';
+        });
+        
+        // 點擊"即時聊天"選項
+        liveChat.addEventListener('click', function() {
+            contactOptions.style.display = 'none';
+            chatMessages.style.display = 'block';
+            chatInput.style.display = 'flex';
+        });
+        
+        // 發送訊息功能
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message !== '') {
+                // 添加用戶訊息
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user';
+                userMessage.textContent = message;
+                messagesContainer.appendChild(userMessage);
+                
+                // 清空輸入框
+                messageInput.value = '';
+                
+                // 滾動到最新消息
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // 模擬客服回覆（延遲1秒）
+                setTimeout(function() {
+                    const agentMessage = document.createElement('div');
+                    agentMessage.className = 'message agent';
+                    agentMessage.textContent = '感謝您的訊息！我們的客服人員將盡快回覆您。';
+                    messagesContainer.appendChild(agentMessage);
+                    
+                    // 再次滾動到最新消息
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+        }
+        
+        // 點擊發送按鈕發送訊息
+        sendButton.addEventListener('click', sendMessage);
+        
+        // 按下Enter鍵發送訊息
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // 電子郵件聯絡選項
+        document.getElementById('emailContact').addEventListener('click', function() {
+            // 顯示電子郵件訊息
+            contactOptions.style.display = 'none';
+            chatMessages.style.display = 'block';
+            
+            const emailInfo = document.createElement('div');
+            emailInfo.className = 'message agent';
+            emailInfo.innerHTML = '您可以發送郵件至：<br>service@axon.com.tw<br>我們將盡快回覆您的郵件。';
+            messagesContainer.appendChild(emailInfo);
+        });
+        
+        // 電話聯絡選項
+        document.getElementById('phoneContact').addEventListener('click', function() {
+            // 顯示電話訊息
+            contactOptions.style.display = 'none';
+            chatMessages.style.display = 'block';
+            
+            const phoneInfo = document.createElement('div');
+            phoneInfo.className = 'message agent';
+            phoneInfo.innerHTML = '您可以撥打我們的客服專線：<br>02-1234-5678<br>服務時間：週一至週五 9:00-18:00';
+            messagesContainer.appendChild(phoneInfo);
+        });
+        
+        // Line 客服選項
+        document.getElementById('lineContact').addEventListener('click', function() {
+            // 顯示Line訊息
+            contactOptions.style.display = 'none';
+            chatMessages.style.display = 'block';
+            
+            const lineInfo = document.createElement('div');
+            lineInfo.className = 'message agent';
+            lineInfo.innerHTML = '請掃描以下QR碼或搜尋LINE ID：<br>@axon_service<br>加入我們的Line客服';
+            messagesContainer.appendChild(lineInfo);
+        });
+    });
+    </script>
+
 </body>
 </html>

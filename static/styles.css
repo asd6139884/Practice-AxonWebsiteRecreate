@@ -576,3 +576,198 @@ overflow: hidden;  /* 隱藏超出的部分 */
 .fixed-icons .icon-box:hover i{
     font-size: 3vh;
 }
+
+/* ----------------------------------------------------------------------------- */
+/* 訊息視窗 */
+.chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1001;
+    font-family: 'Yantramanav', 'Noto Sans TC', sans-serif;
+}
+
+/* 聊天按鈕樣式 */
+.chat-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #f9b233;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.chat-button i {
+    font-size: 24px;
+}
+
+.chat-button:hover {
+    background-color: #e9b60e;
+    transform: scale(1.05);
+}
+
+/* 聊天視窗樣式 */
+.chat-container {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 350px;
+    height: 450px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 1001;
+    flex-direction: column;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.chat-container.show {
+    display: flex;
+}
+
+/* 頭部樣式 */
+.chat-header {
+    background-color: #f9b233;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.chat-close {
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* 訊息區域樣式 */
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #f5f5f5;
+}
+
+.message {
+    margin-bottom: 10px;
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.message.user {
+    background-color: #e9b60e;
+    color: white;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.message.agent {
+    background-color: #e0e0e0;
+    color: #333;
+    align-self: flex-start;
+}
+
+.chat-messages-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* 輸入區域樣式 */
+.chat-input {
+    padding: 15px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    font-size: 14px;
+}
+
+.chat-input button {
+    margin-left: 10px;
+    padding: 5px 15px;
+    background-color: #f9b233;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.chat-input button:hover {
+    background-color: #e9b60e;
+}
+
+/* 聯絡方式選擇區 */
+.contact-options {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-options p {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    text-align: center;
+    color: #666;
+}
+
+.contact-options .option {
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.contact-options .option:hover {
+    background-color: #e0e0e0;
+}
+
+.contact-options .option i {
+    margin-right: 10px;
+    color: #f9b233;
+    font-size: 16px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+
