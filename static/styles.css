@@ -184,11 +184,11 @@ body, html {
 
 /* 特定聯絡方式滑鼠懸停時文字變色 */
 .contact-info p.contact-item:hover  {
-    color: #e9b60e;
+    color: rgb(233, 182, 14);
 }
 /* 特定聯絡方式滑鼠懸停時圖標變色 */
 .contact-info p.contact-item:hover i {
-    color: #e9b60e;
+    color: rgb(233, 182, 14);
 }
 
 /* 社群媒體icon */
@@ -307,8 +307,8 @@ body, html {
         padding: 2vh 0;
     }
     .mobile-menu .mobile-nav-links a.active {
-        color: #e9b60e;
-        border-left: 3px solid #e9b60e;
+        color: rgb(233, 182, 14);
+        border-left: 3px solid rgb(233, 182, 14);
         padding-left: 10px;
     }
     /* 覆蓋原本的聯絡資訊顯示 */
@@ -534,4 +534,45 @@ overflow: hidden;  /* 隱藏超出的部分 */
 }
 
 /* ----------------------------------------------------------------------------- */
+/* 右側中間固定小區塊 */
+.fixed-icons {
+    position: fixed;
+    right: 10px;
+    top: 35%;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+.fixed-icons .icon-box {
+    width: 4.5vh;
+    height: 6vh;
+    font-size: 2vh;
+    background-color: rgb(249, 178, 51);
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    text-decoration: none; /* 移除底線 */
+}
+/* 圖示間距 */
+.fixed-icons .icon-box:nth-child(1) {
+    top: 0;
+}
+.fixed-icons .icon-box:nth-child(2) {
+    top: 6.1vh;
+}
+.fixed-icons .icon-box:nth-child(3) {
+    top: 12.2vh;
+}
 
+/* 滑鼠懸停時 */
+.fixed-icons .icon-box:hover {
+    width: 6vh;
+}
+.fixed-icons .icon-box:hover i{
+    font-size: 3vh;
+}
